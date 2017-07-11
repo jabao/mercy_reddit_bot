@@ -3,7 +3,7 @@ import time
 import sys
 import os
 
-user = 'tulilie'
+user = 'heyguysimainmercy'
 subreddit = 'bottestingsite'
 num_replies = 0
 #how many comments to scan per run
@@ -13,13 +13,15 @@ strings = ['mercy main', 'main mercy', 'mercy player', 'plays mercy']
 
 def main():
 	#log in
+	print('logging in', file=sys.stderr)
 	reddit = praw.Reddit('bot1')
+	print('logged in', file.sys.stderr)
 	#subreddit to scan
 	sub = reddit.subreddit(subreddit)
 	#comments replied to
 	replies = get_replies()
 
-	#delete(reddit)
+	delete(reddit)
 	while(True):
 		run(reddit, sub, replies)
 		print('sleeping 10s', file=sys.stderr)
@@ -40,14 +42,14 @@ def run(r, sub, replies):
 			print(reply.body, file=sys.stderr)
 		for string in strings:
 			if string in comment.body.lower():
-				#do not reply if already replied
-				for rep in comment.replies:
+				#do not reply if already replied (this implementation broken)
+				'''for rep in comment.replies:
 					print('testerdogger', file=sys.stderr)
 					if rep.author == r.user.me():
 						print('already replied', file=sys.stderr)
 						ok = True
-						break
-				#reply if not to self
+						break'''
+				#reply if not to self and do not reply if already replied (working)
 				if(not ok and not comment.author == r.user.me() and comment.id not in replies):
 					reply(comment)
 					replies.append(comment.id)
